@@ -53,13 +53,13 @@ echo 01 > ca/root-ca/db/root-ca.crl.srl
   新建中间证书的存储目录，并创建中间证书存储数据库
   例如，创建Sign的中间签发证书
   ```
-  mkdir -p ca/signing-ca/private ca/signing-ca/db crl certs
-  chmod 700 ca/signing-ca/private
+mkdir -p ca/signing-ca/private ca/signing-ca/db crl certs
+chmod 700 ca/signing-ca/private
 
-  cp /dev/null ca/signing-ca/db/signing-ca.db
-  cp /dev/null ca/signing-ca/db/signing-ca.db.attr
-  echo 01 > ca/signing-ca/db/signing-ca.crt.srl
-  echo 01 > ca/signing-ca/db/signing-ca.crl.srl
+cp /dev/null ca/signing-ca/db/signing-ca.db
+cp /dev/null ca/signing-ca/db/signing-ca.db.attr
+echo 01 > ca/signing-ca/db/signing-ca.crt.srl
+echo 01 > ca/signing-ca/db/signing-ca.crl.srl
   ```
 
 #### 2.2 请求
@@ -77,12 +77,12 @@ echo 01 > ca/root-ca/db/root-ca.crl.srl
 
 #### 2.4 初始化吊销
   ```
-  openssl ca -gencrl -config etc/signing-ca.conf -out crl/signing-ca.crl
+openssl ca -gencrl -config etc/signing-ca.conf -out crl/signing-ca.crl
   ```
 #### 2.5 创建PEM包
   连锁在一起的
   ```
-  cat ca/signing-ca.crt ca/root-ca.crt > ca/signing-ca-chain.pem
+cat ca/signing-ca.crt ca/root-ca.crt > ca/signing-ca-chain.pem
   ```
 
 ### 3. 签发用户证书
