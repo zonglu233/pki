@@ -63,11 +63,11 @@ echo 01 > ca/signing-ca/db/signing-ca.crl.srl
   ```
 
 #### 2.2 请求
-  首先，复制 `/signing-ca.conf` 文件，根据工作区，新建配置文件，并配置其属性，例如ebeiport-ca.conf。然后执行请求命令
+  首先，复制 `/signing-ca.conf` 文件，根据工作区，新建配置文件，并配置其属性，例如hebeiport-ca.conf。然后执行请求命令
   ```
   openssl req -new -config etc/signing-ca.conf -out ca/signing-ca.csr -keyout ca/signing-ca/private/signing-ca.key
   ```
-  输入PEM的参数密码，例如：hebei(A...3)
+  输入PEM的参数密码，例如：s***s(A...3)
 
 #### 2.3 签发
   使用根证书的配置信息签发
@@ -90,25 +90,25 @@ cat ca/signing-ca.crt ca/root-ca.crt > ca/signing-ca-chain.pem
 #### 3.1 请求(以jbws证书为例)
   根据不同用户，修改 `signing.conf` 配置信息，执行命令
   ```
-  openssl req -new -config etc/signing.conf -out certs/jbws.csr -keyout certs/jbws.key
+  openssl req -new -config etc/signing.conf -out certs/dak.csr -keyout certs/dak.key
   ```
-  （依次填写相应信息：CN - Hebei - Qinhuangdao - Steedos Inc. - Steedos Inc. - JBWS - jbws@portqhd.com）
+  （依次填写相应信息：CN - Hebei - Qinhuangdao - Steedos Inc. - Steedos Inc. - JBWS - dak@portqhd.com）
   其中，organizationName必须与根证书配置文件相同，即Steedos Inc.
 
 #### 3.2 创建
   根据中间证书，签发用户证书，用户证书为crt格式，用户名可自定义，例如jbws
   ```
-  openssl ca -config etc/signing-ca.conf -in certs/jbws.csr -out certs/jbws.crt -extensions signing_ext
+openssl ca -config etc/signing-ca.conf -in certs/dak.csr -out certs/dak.crt -extensions signing_ext
   ```
 
 #### 3.3 初始化吊销CRL
   ```
-  openssl ca -gencrl -config etc/signing-ca.conf -out crl/signing-ca.crl
+openssl ca -gencrl -config etc/signing-ca.conf -out crl/signing-ca.crl
   ```
 
 #### 3.4 创建PKCS＃12证书
   ```
-  openssl pkcs12 -export -name "JBWS" -caname "HeBei Port Group" -caname "Steedos Root Certificate Authority" -inkey certs/jbws.key -in certs/jbws.crt -certfile ca/signing-ca-chain.pem -out certs/jbws.p12
+openssl pkcs12 -export -name "DAK" -caname "HeBei Port Group" -caname "Steedos Root Certificate Authority" -inkey certs/dak.key -in certs/dak.crt -certfile ca/signing-ca-chain.pem -out certs/dak.p12
   ```
 
 #### 3.5 吊销证书
