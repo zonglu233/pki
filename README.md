@@ -148,9 +148,7 @@ echo 01 > ca/root-ca/db/root-ca.crl.srl
 
 ---
 
-*******************************************************
-          输出格式
-*******************************************************
+#### 输出格式
 1.创建DER证书
 openssl x509 -in certs/fred.crt -out certs/fred.cer -outform der
 
@@ -169,9 +167,8 @@ cat ca/hebeiport-ca.crt ca/root-ca.crt > ca/hebeiport-ca-chain.pem
 cat certs/fred.key certs/fred.crt > certs/fred.pem
 
 
-*******************************************************
-          查看
-*******************************************************
+
+#### 查看
 1.查看请求
 openssl req -in certs/fred.csr -noout -text
 
@@ -190,9 +187,7 @@ openssl pkcs12 -in certs/fred.p12 -nodes -info
 
 
 
-*******************************************************
-          Component证书
-*******************************************************
+#### Component证书
 1.创建
 mkdir -p ca/component-ca/private ca/component-ca/db crl certs
 chmod 700 ca/component-ca/private
@@ -215,9 +210,8 @@ openssl ca -gencrl -config etc/component-ca.conf -out crl/component-ca.crl
 6.创建PEM包
 cat ca/component-ca.crt ca/root-ca.crt > ca/component-ca-chain.pem
 
-*******************************************************
-          OCSP证书
-*******************************************************
+
+#### OCSP证书
 1.请求
 openssl req -new -config etc/ocspsign.conf -out certs/ocsp1.csr -keyout certs/ocsp1.key
 
